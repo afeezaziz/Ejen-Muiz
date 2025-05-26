@@ -1,7 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://bcpnl2g175llb"]
 
-[ext_resource type="Script" uid="uid://fc3tcbsdqcrx" path="res://scripts/controller/ejen_muiz.gd" id="1_62xot"]
-[ext_resource type="ArrayMesh" uid="uid://wwej4ditbs71" path="res://assets/models/character-male-a.obj" id="1_i2jtb"]
+[ext_resource type="PackedScene" uid="uid://ca4l2oelkfu0l" path="res://scenes/controller/ejen_muiz.tscn" id="1_i2jtb"]
+[ext_resource type="PackedScene" uid="uid://bpes175jcxnl8" path="res://scenes/controller/portal.tscn" id="2_62xot"]
+[ext_resource type="AudioStream" uid="uid://cxd1atsxmu6hp" path="res://resources/bg_music_01.mp3" id="3_nacne"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_auaoj"]
 albedo_color = Color(0.689632, 0.708847, 0.376568, 1)
@@ -18,7 +19,7 @@ albedo_color = Color(0.145098, 0.666667, 0.356863, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_nacne"]
 material = SubResource("StandardMaterial3D_62xot")
-size = Vector3(1, 10, 50)
+size = Vector3(1, 40, 50)
 
 [sub_resource type="Environment" id="Environment_f2u4b"]
 background_mode = 2
@@ -26,9 +27,7 @@ ambient_light_color = Color(1, 0.92549, 0.972549, 1)
 ambient_light_sky_contribution = 0.77
 ambient_light_energy = 2.3
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_62xot"]
-
-[node name="Hq" type="Node3D"]
+[node name="HQ" type="Node3D"]
 
 [node name="Floor" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_i2jtb")
@@ -61,16 +60,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.83214, 8.46152, -16.5878)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_f2u4b")
 
-[node name="EjenMuiz" type="CharacterBody3D" parent="."]
+[node name="EjenMuiz" parent="." instance=ExtResource("1_i2jtb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.30741, 0)
-script = ExtResource("1_62xot")
 
-[node name="Visuals" type="MeshInstance3D" parent="EjenMuiz"]
-mesh = ExtResource("1_i2jtb")
+[node name="Skeleton3D" parent="EjenMuiz/Model" index="0"]
+bones/5/rotation = Quaternion(0, 0, 0, 1)
+bones/6/rotation = Quaternion(0, 0, 0, 1)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="EjenMuiz"]
-shape = SubResource("CapsuleShape3D_62xot")
+[node name="Area3D" parent="." instance=ExtResource("2_62xot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.292903, 0.25, 5.68976)
+target_scene_path = "uid://c5n4v4vn5aq6q"
 
-[node name="FollowCamera" type="Camera3D" parent="EjenMuiz"]
-transform = Transform3D(-1, 0, 8.74228e-08, 2.31612e-08, 0.964267, 0.264933, -8.42989e-08, 0.264933, -0.964267, 0, 0.944724, -1.72826)
-current = true
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(-0.991635, 0, 0.129072, 0, 1, 0, -0.129072, 0, -0.991635, 0, 0.879884, 4.31564)
+text = "Ejen Muiz"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_nacne")
+autoplay = true
+parameters/looping = false
+
+[connection signal="body_entered" from="Area3D" to="EjenMuiz" method="_on_area_3d_body_entered"]
+
+[editable path="EjenMuiz"]
+[editable path="EjenMuiz/Model"]

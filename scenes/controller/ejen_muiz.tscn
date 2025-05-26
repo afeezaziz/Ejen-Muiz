@@ -1,0 +1,60 @@
+[gd_scene load_steps=13 format=3 uid="uid://ca4l2oelkfu0l"]
+
+[ext_resource type="Script" uid="uid://fc3tcbsdqcrx" path="res://scripts/controller/ejen_muiz.gd" id="1_2tyfl"]
+[ext_resource type="PackedScene" uid="uid://bbnp4hk23nmkk" path="res://assets/models/ejen-muiz.glb" id="2_fttb1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fttb1"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fttb1"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_doshr"]
+animation = &"jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_m2p6c"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fttb1"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_doshr"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_o17cl"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_m2p6c"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tvpla"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_xv6as"]
+states/idle/node = SubResource("AnimationNodeAnimation_fttb1")
+states/idle/position = Vector2(395.91, 98.1813)
+states/jump/node = SubResource("AnimationNodeAnimation_doshr")
+states/jump/position = Vector2(563.26, 204.413)
+states/walk/node = SubResource("AnimationNodeAnimation_m2p6c")
+states/walk/position = Vector2(561.76, 95.7969)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_fttb1"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_doshr"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_o17cl"), "idle", "jump", SubResource("AnimationNodeStateMachineTransition_m2p6c"), "jump", "idle", SubResource("AnimationNodeStateMachineTransition_tvpla")]
+graph_offset = Vector2(107.76, -11.5875)
+
+[node name="EjenMuiz" type="CharacterBody3D"]
+script = ExtResource("1_2tyfl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0423012, 0)
+shape = SubResource("BoxShape3D_fttb1")
+
+[node name="FollowCamera" type="Camera3D" parent="."]
+transform = Transform3D(-0.967192, 0.0673049, -0.244967, 2.68513e-08, 0.964267, 0.264933, 0.254045, 0.256241, -0.932632, -0.39226, 0.944724, -1.46529)
+current = true
+
+[node name="Model" parent="." instance=ExtResource("2_fttb1")]
+
+[node name="Skeleton3D" parent="Model" index="0"]
+bones/5/rotation = Quaternion(0, 0, -0.382683, 0.92388)
+bones/6/rotation = Quaternion(0, 0, 0.382683, 0.92388)
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../Model")
+tree_root = SubResource("AnimationNodeStateMachine_xv6as")
+anim_player = NodePath("../Model/AnimationPlayer")
+
+[editable path="Model"]
