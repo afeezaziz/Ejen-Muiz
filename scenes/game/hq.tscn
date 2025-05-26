@@ -1,0 +1,76 @@
+[gd_scene load_steps=10 format=3 uid="uid://bcpnl2g175llb"]
+
+[ext_resource type="Script" uid="uid://fc3tcbsdqcrx" path="res://scripts/controller/ejen_muiz.gd" id="1_62xot"]
+[ext_resource type="ArrayMesh" uid="uid://wwej4ditbs71" path="res://assets/models/character-male-a.obj" id="1_i2jtb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_auaoj"]
+albedo_color = Color(0.689632, 0.708847, 0.376568, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i2jtb"]
+material = SubResource("StandardMaterial3D_auaoj")
+size = Vector2(50, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_62xot"]
+size = Vector3(50, 0, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_62xot"]
+albedo_color = Color(0.145098, 0.666667, 0.356863, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nacne"]
+material = SubResource("StandardMaterial3D_62xot")
+size = Vector3(1, 10, 50)
+
+[sub_resource type="Environment" id="Environment_f2u4b"]
+background_mode = 2
+ambient_light_color = Color(1, 0.92549, 0.972549, 1)
+ambient_light_sky_contribution = 0.77
+ambient_light_energy = 2.3
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_62xot"]
+
+[node name="Hq" type="Node3D"]
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_i2jtb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0.391174)
+shape = SubResource("BoxShape3D_62xot")
+
+[node name="Wall1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.6371, 0, 0)
+mesh = SubResource("BoxMesh_nacne")
+
+[node name="Wall3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.00570721, 0, 0.999984, 0, 1, 0, -0.999984, 0, -0.00570721, 0, 0, 25)
+mesh = SubResource("BoxMesh_nacne")
+
+[node name="Wall4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.00570721, 0, 0.999984, 0, 1, 0, -0.999984, 0, -0.00570721, 0, 0, -25.2916)
+mesh = SubResource("BoxMesh_nacne")
+
+[node name="Wall2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 0)
+mesh = SubResource("BoxMesh_nacne")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.83214, 8.46152, -16.5878)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_f2u4b")
+
+[node name="EjenMuiz" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.30741, 0)
+script = ExtResource("1_62xot")
+
+[node name="Visuals" type="MeshInstance3D" parent="EjenMuiz"]
+mesh = ExtResource("1_i2jtb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EjenMuiz"]
+shape = SubResource("CapsuleShape3D_62xot")
+
+[node name="FollowCamera" type="Camera3D" parent="EjenMuiz"]
+transform = Transform3D(-1, 0, 8.74228e-08, 2.31612e-08, 0.964267, 0.264933, -8.42989e-08, 0.264933, -0.964267, 0, 0.944724, -1.72826)
+current = true

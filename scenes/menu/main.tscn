@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyhs5dhoaxgcq"]
+
+[ext_resource type="Script" uid="uid://c3yv6ylkvpdc5" path="res://scripts/menu/menu_main.gd" id="1_rrmte"]
+
+[node name="MenuMain" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 11.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rrmte")
+
+[node name="MenuVBox" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_top = 6.0
+offset_right = 720.0
+offset_bottom = 1274.0
+
+[node name="TitleLabel" type="Label" parent="MenuVBox"]
+layout_mode = 2
+text = "Ejen Muiz"
+horizontal_alignment = 1
+
+[node name="PlayButton" type="Button" parent="MenuVBox"]
+layout_mode = 2
+text = "Play
+"
+
+[node name="SettingsButton" type="Button" parent="MenuVBox"]
+layout_mode = 2
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="MenuVBox"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="MenuVBox/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MenuVBox/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MenuVBox/QuitButton" to="." method="_on_quit_button_pressed"]
